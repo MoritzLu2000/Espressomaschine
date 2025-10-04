@@ -15,7 +15,7 @@ int TouchbuttonInputRight = 21;
 bool endtimer = false;
 
 bool state = false;
-float voltage = 0;
+float voltage = 2;
 int m = 0;
 int i = 0;
 
@@ -46,22 +46,39 @@ void onTimer() {
 
 
 void readout(){
-  /*int sensorValue = analogRead(sensorPin);
+  int sensorValue = analogRead(sensorPin);
   voltage = sensorValue * (5.0 / 1023.0);
   Serial.println(voltage);
-  if (voltage < 1) {
+  if (voltage < 0.1) {
     if(state){
-      Displaytimer.attach(1.0, onTimer);
-      state = false;
-    }else{
+      //display.clear();
       Displaytimer.detach();
+      state = false;
+      endtimer = true;
+    }else{
+      Displaytimer.attach(1.0, onTimer);
       state = true;
     }
-  }*/
+  }
 }
 
 //---------------------Button Interrupts----------------------------------------------
 void IRAM_ATTR onLeftTouch()  {
+  endtimer = false;
+  Serial.println(state);
+  if(state){
+    //display.clear();
+    Displaytimer.detach();
+    //Readouttimer.detach();
+    state = false;
+    endtimer = true;
+  }else{
+    Displaytimer.attach(1.0, onTimer);
+    state = true;
+  }
+}
+
+void IRAM_ATTR onRightTouch() {
   endtimer = false;
   Serial.println(state);
   if(state){
@@ -76,7 +93,8 @@ void IRAM_ATTR onLeftTouch()  {
   }
 }
 
-void IRAM_ATTR onRightTouch() { Serial.println("rechts");}
+
+
 
 void setup() {
   Serial.begin(9600);
