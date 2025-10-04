@@ -9,11 +9,17 @@
 int sensorValue = 0;
 int SensorPin = 21;
 
+int TouchbuttonInputLeft = 22;
+int TouchbuttonInputRight = 21;
+
+
+
 float voltage = 0;
 int m = 0;
 int i =0 ;
 TM1637Display display(CLK, DIO);  // Create an instance of the TM1637Display
 Ticker Displaytimer;
+Ticker Readouttimer;
 
 
 void onTimer() {
@@ -31,13 +37,30 @@ void onTimer() {
   i++;
 }
 
+void readout(){}
+
+void IRAM_ATTR onLeftTouch()  { Serial.println("links");
+}
+void IRAM_ATTR onRightTouch() { Serial.println("rechts");
+}
+
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   display.setBrightness(5);  // Set the display brightness (0-7)
+
   Displaytimer.attach(1.0, onTimer);
+  Readouttimer.attach(0.2, readout);
+
+  attachInterrupt(digitalPinToInterrupt(TouchbuttonInputLeft),  onLeftTouch,  CHANGE);
+  attachInterrupt(digitalPinToInterrupt(TouchbuttonInputRight), onRightTouch, CHANGE);
+
+  pinMode(TouchbuttonInputLeft, INPUT);
+  pinMode(TouchbuttonInputRight, INPUT);
+
 }
 
 
 void loop() {
+
 }
