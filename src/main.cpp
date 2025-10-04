@@ -46,20 +46,7 @@ void onTimer() {
 
 
 void readout(){
-  int sensorValue = analogRead(sensorPin);
-  voltage = sensorValue * (5.0 / 1023.0);
-  Serial.println(voltage);
-  if (voltage < 0.1) {
-    if(state){
-      //display.clear();
-      Displaytimer.detach();
-      state = false;
-      endtimer = true;
-    }else{
-      Displaytimer.attach(1.0, onTimer);
-      state = true;
-    }
-  }
+
 }
 
 //---------------------Button Interrupts----------------------------------------------
@@ -108,7 +95,6 @@ void setup() {
 
   pinMode(TouchbuttonInputLeft, INPUT);
   pinMode(TouchbuttonInputRight, INPUT);
-
 }
 
 
