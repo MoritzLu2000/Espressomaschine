@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <TM1637Display.h>
 #include <Ticker.h>
+#include <RtcDS1302.h>
 
 // Define the connections pins
 #define CLK 17
