@@ -1,9 +1,36 @@
-Verkabelung Rückseite:<br>
-<img width="686" height="778" alt="Espressomaschiene_Display" src="https://github.com/user-attachments/assets/aed11ef7-18b5-4138-9b8e-7e8bdb0c0dfb" />
+# Rancilio Silvia Upgrade
 
-Display:<br>
-<img width="478" height="663" alt="Espressomaschiene_Display2" src="https://github.com/user-attachments/assets/bad0ad46-6da0-4f17-b487-a965fa9b67f1" />
+In diesem Projekt habe ich meine **Rancilio Silvia** Espressomaschine um einige Funktionen erweitert.  
+Ziel war es, die Bezugszeit automatisch anzuzeigen und die Bedienung etwas moderner zu gestalten.
 
+---
 
-Video Link:
+## Überblick
+
+Ich habe ein **vierstelliges 7-Segment-Display** eingebaut, das automatisch startet, sobald der Bezug beginnt,  
+und wieder stoppt, wenn der Espresso fertig ist.  
+
+Außerdem gibt es jetzt **induktive Tasten** an der Front, mit denen später zusätzliche Funktionen gesteuert werden können.  
+Ein **Wasserstandssensor** und ein **Uhrzeitmodul** sind bereits vorbereitet, aber noch nicht aktiv.
+
+![Gesamtansicht der umgebauten Maschine](https://github.com/user-attachments/assets/dd5c7d4d-201a-4ffe-9bd7-999d21807594)
+
+---
+
+## Elektronik und Aufbau
+
+Die Elektronik sitzt auf der Rückseite der Maschine.  
+Hier sind einige Bilder des Aufbaus:
+
+![Rückseite 1](https://github.com/user-attachments/assets/814a3628-3d86-42c5-b331-13a92b44effe)
+![Rückseite 2](https://github.com/user-attachments/assets/9913349e-9b8f-4fae-85b5-c59e36bbe7ad)
+![Rückseite 3](https://github.com/user-attachments/assets/9aad19d4-9091-49dd-bf42-d4141211aecd)
+
+![Detailansicht](https://github.com/user-attachments/assets/74dee1ea-438a-4764-8024-2ced9c2f64f7)
+
+---
+
+## Video
+
+Ein kurzes Video, in dem das System in Betrieb gezeigt wird:  
 https://youtube.com/shorts/bBcD29Wb2CY
