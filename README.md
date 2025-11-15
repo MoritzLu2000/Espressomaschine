@@ -1,6 +1,7 @@
+---
+
 # Rancilio Silvia Upgrade – Version 2
 
----
 
 ## Überblick
 
@@ -46,13 +47,13 @@ Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden
 
 - **Unterstützung der Features aus Version 1:** Ein Mikrocontroller zur Ansteuerung der Peripherie (Display, Taster, Sensoren, Relais). Ein Netzteil, das die benötigten **5 V bzw. 3,3 V** für Mikrocontroller und Logik bereitstellt.
 
-###### Temperaturauslesung
+##### Temperaturauslesung
 
-###### Steuerung mit Relais
+##### Steuerung mit Relais
 
-###### SSR-Steuerung
+##### SSR-Steuerung
 
-###### Mikrocontroller
+##### Mikrocontroller
 
 
 
@@ -65,7 +66,6 @@ Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden
 In diesem Projekt habe ich meine **Rancilio Silvia** Espressomaschine um einige Funktionen erweitert.  
 Ziel war es, die Bezugszeit automatisch anzuzeigen und die Bedienung etwas moderner zu gestalten.
 
----
 
 ## Version 1 – Funktionsumfang
 
