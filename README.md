@@ -101,9 +101,6 @@ Folgende Komponenten sind **hardwareseitig bereits verbaut**, aber in **Version 
 Die Elektronik sitzt auf der Rückseite der Maschine.  
 Hier sind einige Bilder des Aufbaus:
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/dd5c7d4d-201a-4ffe-9bd7-999d21807594" width="400">
-</p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/abea20eb-465b-47bb-b92e-258c94e5adad" width="400">
