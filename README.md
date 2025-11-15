@@ -26,8 +26,6 @@ In diesem Projekt (Version 2) sollen daher folgende Punkte angegangen werden:
   
 ### Version 2.1 – Funktionsumfang
 
-#### Überblick
-
 Als erstes soll in Version 2.1 die **konstante Brühtemperatur** angegangen werden.  
 Da in den nächsten Schritten auch der **Steam-Part** grundlegend verändert werden soll, wird in dieser Phase die Dampflanze außer Betrieb genommen:  
 Der Abgang des Boilers, der zur Steam-Lanze führt, wird – wie in **Bild 1** zu sehen – verschlossen.
@@ -47,13 +45,6 @@ Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden
 
 - **Unterstützung der Features aus Version 1:** Ein Mikrocontroller zur Ansteuerung der Peripherie (Display, Taster, Sensoren, Relais). Ein Netzteil, das die benötigten **5 V bzw. 3,3 V** für Mikrocontroller und Logik bereitstellt.
 
-##### Temperaturauslesung
-
-##### Steuerung mit Relais
-
-##### SSR-Steuerung
-
-##### Mikrocontroller
 
 
 
