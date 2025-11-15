@@ -38,39 +38,22 @@ Damit die Temperaturverläufe analysiert und später einzelne Komponenten geziel
 
 Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden und bringt daher folgende Funktionen mit:
 
-- **Temperaturauslesung**  
-  - Bis zu **3 Eingänge für Thermoelement-Sensoren (Thermocouples)**, um verschiedene Punkte (z.B. Boiler, Brühgruppe, Leitung) messen zu können.  
-  - Damit ist die Hardware bereits auf zukünftige Regelungs-Features vorbereitet.
+- **Temperaturauslesung:** Bis zu 3 Eingänge für Thermoelement-Sensoren (Thermocouples), um verschiedene Punkte (z.B. Boiler, Brühgruppe, Leitung) messen zu können und damit ist die Hardware bereits auf zukünftige Regelungs-Features vorbereitet.
 
-- **Relais für selten geschaltete Verbraucher**  
-  - Mehrere Relais für Komponenten, die nicht ständig ein- und ausgeschaltet werden (z.B. Pumpe, Magnetventile, ggf. Heißwasserfunktionen).  
-  - Zur Erweiterbarkeit werden dafür **8 Relaisplätze** vorgesehen.
+- **Relais für selten geschaltete Verbraucher:** Mehrere Relais für Komponenten, die nicht ständig ein- und ausgeschaltet werden (z.B. Pumpe, Magnetventile, ggf. Heißwasserfunktionen). Zur Erweiterbarkeit werden dafür 8 Relaisplätze vorgesehen.
 
-- **Steuerungselektronik für SSR (Solid State Relays)**  
-  - Für Verbraucher, die später **geregelt** werden sollen (z.B. Heizung), sind SSR-Ansteuerungen sinnvoll, da häufiges Schalten:
-    - die Lebensdauer mechanischer Relais reduziert und  
-    - die Geräuschkulisse deutlich erhöht.  
+- **Steuerungselektronik für SSR (Solid State Relays):** Für Verbraucher, die später geregelt werden sollen (z.B. Heizung), sind SSR-Ansteuerungen sinnvoll, da häufiges Schalten die Lebensdauer mechanischer Relais reduziert und die Geräuschkulisse deutlich erhöht.  
 
-- **Unterstützung der Features aus Version 1**  
-  - Ein **Mikrocontroller** zur Ansteuerung der Peripherie (Display, Taster, Sensoren, Relais).  
-  - Ein **Netzteil**, das die benötigten **5 V bzw. 3,3 V** für Mikrocontroller und Logik bereitstellt.
+- **Unterstützung der Features aus Version 1:** Ein Mikrocontroller zur Ansteuerung der Peripherie (Display, Taster, Sensoren, Relais). Ein Netzteil, das die benötigten **5 V bzw. 3,3 V** für Mikrocontroller und Logik bereitstellt.
 
 ###### Temperaturauslesung
 
-Die Platine stellt mehrere Eingänge für Thermoelemente bereit, um an verschiedenen Stellen im System Temperaturen erfassen und später auswerten zu können. Damit können Temperaturverläufe aufgezeichnet und die Wirkung von Änderungen (Isolation, Regelung, etc.) objektiv beurteilt werden.
-
 ###### Steuerung mit Relais
-
-Über die Relais werden Komponenten geschaltet, die nur gelegentlich betätigt werden müssen (z.B. Pumpe, Ventile). Die Auslegung mit mehreren Relaisplätzen ermöglicht zukünftige Erweiterungen, ohne die Platine neu designen zu müssen.
 
 ###### SSR-Steuerung
 
-Für Lasten, die fein geregelt oder häufiger geschaltet werden sollen (insbesondere die Heizung), werden Solid State Relays vorgesehen. Die Platine stellt dafür saubere Steuersignale bereit, sodass später unterschiedliche Regelalgorithmen (z.B. PID) getestet werden können.
-
 ###### Mikrocontroller
 
-Ein zentraler Mikrocontroller übernimmt die Logik:  
-Er liest die Sensoren aus, steuert Relais und SSRs, unterstützt die Anzeige- und Eingabefunktionen aus Version 1 und bildet damit die Grundlage für weitere Software-Features in zukünftigen Versionen.
 
 
 ---
