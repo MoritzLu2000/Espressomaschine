@@ -1,30 +1,36 @@
 # Rancilio Silvia Upgrade – Version 2
 
 ---
+
 ## Überblick
 
-In Version 2 möchte ich meine **Rancilio Silvia** über die bisherige Shot-Timer-Funktion hinaus erweitern.  
-Ziel ist es, die Maschine „smarter“ zu machen und mehr Informationen sowie Komfortfunktionen bereitzustellen.
+Die **Version 1** hat meine Rancilio Silvia mit der Shot-Timer-Funktion bereits deutlich alltagstauglicher gemacht die grundsätzlichen Einschränkungen einer Single-Boiler-Maschine bleiben aber bestehen.
+
+Um zwischen **Espressobezug** und **Milchaufschäumen** zu wechseln, muss der komplette Boiler jeweils aufgeheizt bzw. wieder abgekühlt werden.  
+Das ist unpraktisch und ineffizient, vor allem weil der Boiler dadurch nicht einfach thermisch isoliert werden kann. Sonst würde er nach dem Aufschäumen zu langsam abkühlen.
+
+Außerdem habe ich die Heißwasserfunktion nie wirklich genutzt, da der kleine Boiler sehr schnell leer ist und dadurch der Nutzen begrenzt bleibt.
+
+Ein weiterer Punkt ist die **Zweipunktregelung** der Temperatur. Wie bei der standardmäßigen Rancilio Silvia wird die Heizung über einfache Thermostate geschaltet.  
+Wie in **Bild 1** zu sehen, haben wir einen Heizstab, mehrere Schalter und Thermostate. Diese Thermostate öffnen oder schließen den Stromfluss durch den Heizstab, je nachdem, ob ihre jeweilige Schalttemperatur unter- oder überschritten wird.  
+
+Das führt zu einer relativ großen **Temperaturschwankung**.
+
+In diesem Projekt (Version 2) sollen daher folgende Punkte angegangen werden:
+
+- konstantere Brühtemperatur
+- mehr Flexibilität zwischen Brühen und Steamen
+- zusätzliche Funktionalitäten wie z.B. automatischer Stopp des Bezugs
+- eventuell mehr nutzbares Volumen für Heißwasser
 
 ---
 
-## Geplante Features in Version 2
 
-Geplant bzw. teilweise schon hardwareseitig vorbereitet sind:
-
-- **Integration des Wasserstandssensors**
-
-
----
-
-## Aktueller Status
 
 
 ---
 
 # Rancilio Silvia Upgrade – Version 1
-
----
 
 ## Überblick
 
@@ -57,8 +63,6 @@ Folgende Komponenten sind **hardwareseitig bereits verbaut**, aber in **Version 
 - **Wasserstandssensor** im Tank  
 - **Uhrzeitmodul (RTC)** für spätere Features wie Logging, Statistiken oder zeitgesteuerte Funktionen  
 
----
-
 ## Elektronik und Aufbau
 
 Die Elektronik sitzt auf der Rückseite der Maschine.  
@@ -77,8 +81,6 @@ Hier sind einige Bilder des Aufbaus:
   <img src="https://github.com/user-attachments/assets/9aad19d4-9091-49dd-bf42-d4141211aecd" width="400">
   <img src="https://github.com/user-attachments/assets/74dee1ea-438a-4764-8024-2ced9c2f64f7" width="400">
 </p>
-
----
 
 ## Video
 
