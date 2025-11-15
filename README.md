@@ -106,13 +106,11 @@ Hier sind einige Bilder des Aufbaus:
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/814a3628-3d86-42c5-b331-13a92b44effe" width="400">
-  <img src="https://github.com/user-attachments/assets/9913349e-9b8f-4fae-85b5-c59e36bbe7ad" width="400">
-</p>
+  <img src="https://github.com/user-attachments/assets/abea20eb-465b-47bb-b92e-258c94e5adad" width="400">
+  <img src="https://github.com/user-attachments/assets/62935b2c-019c-40e4-90bb-e14d5a3f3bf0" width="400">
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/9aad19d4-9091-49dd-bf42-d4141211aecd" width="400">
-  <img src="https://github.com/user-attachments/assets/74dee1ea-438a-4764-8024-2ced9c2f64f7" width="400">
+  <img src="https://github.com/user-attachments/assets/84878e75-d4bd-44d7-9148-dd4ca281ae96" width="400">
+  <img src="https://github.com/user-attachments/assets/47be6447-ed4e-4001-860f-f3a2041c26f1" width="400">
 </p>
 
 ## Video
