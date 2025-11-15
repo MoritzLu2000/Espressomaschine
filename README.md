@@ -27,7 +27,7 @@ In diesem Projekt (Version 2) sollen daher folgende Punkte angegangen werden:
 ### Version 2.1 – Funktionsumfang
 
 Als erstes soll in Version 2.1 die **konstante Brühtemperatur** angegangen werden.  
-Da in den nächsten Schritten auch der **Steam-Part** grundlegend verändert werden soll, wird in dieser Phase die Dampflanze außer Betrieb genommen und der Abgang des Boilers, der zur Steam-Lanze führt, wird wie in **Bild 1** zu sehen verschlossen.
+Da in den nächsten Schritten auch der **Steam-Part** grundlegend verändert werden soll, wird in dieser Phase die Dampflanze außer Betrieb genommen und der Abgang des Boilers, der zur Steam-Lanze führt, wird wie in den Bildern zu sehen verschlossen.
 
 Damit die Temperatur dieses einzelnen Boilers später geregelt werden kann, wird in Version 2.1 eine eigene **Steuerplatine** entwickelt und aufgebaut.
 Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden und bringt daher folgende Funktionen mit:
