@@ -27,14 +27,9 @@ In diesem Projekt (Version 2) sollen daher folgende Punkte angegangen werden:
 ### Version 2.1 – Funktionsumfang
 
 Als erstes soll in Version 2.1 die **konstante Brühtemperatur** angegangen werden.  
-Da in den nächsten Schritten auch der **Steam-Part** grundlegend verändert werden soll, wird in dieser Phase die Dampflanze außer Betrieb genommen:  
-Der Abgang des Boilers, der zur Steam-Lanze führt, wird – wie in **Bild 1** zu sehen – verschlossen.
+Da in den nächsten Schritten auch der **Steam-Part** grundlegend verändert werden soll, wird in dieser Phase die Dampflanze außer Betrieb genommen und der Abgang des Boilers, der zur Steam-Lanze führt, wird wie in **Bild 1** zu sehen verschlossen.
 
-Um einen sinnvollen Vergleich zur Originalmaschine zu haben, wird in dieser Version die Temperatur **zunächst weiterhin mit den originalen Thermostaten** geregelt.  
-Damit die Temperaturverläufe analysiert und später einzelne Komponenten gezielt geregelt werden können, wird in Version 2.1 eine eigene **Steuerplatine** entwickelt und aufgebaut.
-
-#### Funktionen der Platine
-
+Damit die Temperatur dieses einzelnen Boilers später geregelt werden kann, wird in Version 2.1 eine eigene **Steuerplatine** entwickelt und aufgebaut.
 Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden und bringt daher folgende Funktionen mit:
 
 - **Temperaturauslesung:** Bis zu 3 Eingänge für Thermoelement-Sensoren (Thermocouples), um verschiedene Punkte (z.B. Boiler, Brühgruppe, Leitung) messen zu können und damit ist die Hardware bereits auf zukünftige Regelungs-Features vorbereitet.
@@ -45,6 +40,20 @@ Die Platine in Version 2.1 soll die Basis für alle weiteren Ausbaustufen bilden
 
 - **Unterstützung der Features aus Version 1:** Ein Mikrocontroller zur Ansteuerung der Peripherie (Display, Taster, Sensoren, Relais). Ein Netzteil, das die benötigten **5 V bzw. 3,3 V** für Mikrocontroller und Logik bereitstellt.
 
+#### Hardware-Details Version 2.1
+<!-- Kurze Beschreibung der Blöcke: µC, Sensor-Eingänge, Relais/SSR, Versorgung, ggf. Schaltplan-Link -->
+
+#### Software-Stand in Version 2.1
+<!-- Was macht die Firmware in 2.1? (Messen, Anzeigen, Loggen …) -->
+
+#### Erste Messergebnisse
+<!-- Platz für Temperaturkurven / Beobachtungen / Bilder (Bild 2 etc.) -->
+
+#### Einschränkungen von Version 2.1
+<!-- Was kann 2.1 bewusst noch nicht? (z.B. keine echte Regelung, Steam deaktiviert …) -->
+
+#### Ausblick auf Version 2.2
+<!-- Was wird in 2.2 auf Basis von 2.1 gemacht? -->
 
 
 
