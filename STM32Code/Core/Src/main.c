@@ -26,30 +26,57 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef enum {
+    STATE_IDLE           = 0,
+    STATE_PUMPING        = 1,
+    STATE_HEATING_BOILER = 2,
+    STATE_HEATING_STEAM  = 3,
+    STATE_ERROR          = 4
+} MachineState;
 
+typedef enum {
+    MODE_OFF      = 0,
+    MODE_LOW      = 1,
+    MODE_MEDIUM   = 2,
+    MODE_HIGH     = 3,
+    MODE_TURBO    = 4,
+    // ... bis 15 möglich (4 Bits)
+} MachineMode;
+
+typedef enum {
+    FLAG_NONE     = 0,
+    FLAG_WARNING  = 1,
+    FLAG_ERROR    = 2,
+    FLAG_CRITICAL = 3
+} MachineFlag;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define CS_Pin        GPIO_PIN_9
+#define CS_GPIO_Port  GPIOA
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
-COM_InitTypeDef BspCOMInit;
+SPI_HandleTypeDef hspi2;
 
 /* USER CODE BEGIN PV */
-
+uint8_t rx_data = 0;
+uint8_t tx_data = 0;
+volatile uint8_t transfer_done = 0;
+volatile MachineState currentState = STATE_IDLE;
+volatile MachineMode  currentMode  = MODE_OFF;
+volatile MachineFlag  currentFlag  = FLAG_NONE;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_SPI2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -57,6 +84,53 @@ static void MX_GPIO_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    if (hspi->Instance == SPI2)
+    {
+        // Bits 7-6: Enum 1 (MachineState)
+        uint8_t cmd1 = (rx_data >> 6) & 0x03;
+        switch (cmd1)
+        {
+            case 0x00: currentState = STATE_IDLE;           break;
+            case 0x01: currentState = STATE_PUMPING;        break;
+            case 0x02: currentState = STATE_HEATING_BOILER; break;
+            case 0x03: currentState = STATE_HEATING_STEAM;  break;
+            default:   currentState = STATE_ERROR;          break;
+        }
+
+        // Bits 5-2: Enum 2 (MachineMode) — 4 Bits
+        uint8_t cmd2 = (rx_data >> 2) & 0x0F;
+        switch (cmd2)
+        {
+            case 0x00: currentMode = MODE_OFF;    break;
+            case 0x01: currentMode = MODE_LOW;    break;
+            case 0x02: currentMode = MODE_MEDIUM; break;
+            case 0x03: currentMode = MODE_HIGH;   break;
+            case 0x04: currentMode = MODE_TURBO;  break;
+            default:   currentMode = MODE_OFF;    break;
+        }
+
+        // Bits 1-0: Enum 3 (MachineFlag) — 2 Bits
+        uint8_t cmd3 = rx_data & 0x03;
+        switch (cmd3)
+        {
+            case 0x00: currentFlag = FLAG_NONE;     break;
+            case 0x01: currentFlag = FLAG_WARNING;  break;
+            case 0x02: currentFlag = FLAG_ERROR;    break;
+            case 0x03: currentFlag = FLAG_CRITICAL; break;
+        }
+
+        tx_data = (uint8_t)currentState;
+        transfer_done = 1;
+        HAL_SPI_TransmitReceive_IT(&hspi2, &tx_data, &rx_data, 1);
+    }
+}
+
+/* USER CODE BEGIN 4 */
+
+/* USER CODE END 4 */
 /* USER CODE END 0 */
 
 /**
@@ -88,31 +162,26 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
+  HAL_SPI_TransmitReceive_IT(&hspi2, &tx_data, &rx_data, 1);
+
+
 
   /* USER CODE END 2 */
-
-  /* Initialize led */
-  BSP_LED_Init(LED_GREEN);
-
-  /* Initialize USER push-button, will be used to trigger an interrupt each time it's pressed.*/
-  BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
-
-  /* Initialize COM1 port (115200, 8 bits (7-bit data + 1 stop bit), no parity */
-  BspCOMInit.BaudRate   = 115200;
-  BspCOMInit.WordLength = COM_WORDLENGTH_8B;
-  BspCOMInit.StopBits   = COM_STOPBITS_1;
-  BspCOMInit.Parity     = COM_PARITY_NONE;
-  BspCOMInit.HwFlowCtl  = COM_HWCONTROL_NONE;
-  if (BSP_COM_Init(COM1, &BspCOMInit) != BSP_ERROR_NONE)
-  {
-    Error_Handler();
-  }
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+      switch (currentState)
+      {
+          case STATE_IDLE:           break;
+          case STATE_PUMPING:        break;
+          case STATE_HEATING_BOILER: break;
+          case STATE_HEATING_STEAM:  break;
+      }
+
 
     /* USER CODE END WHILE */
 
@@ -168,20 +237,70 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI2_Init(void)
+{
+
+  /* USER CODE BEGIN SPI2_Init 0 */
+
+  /* USER CODE END SPI2_Init 0 */
+
+  /* USER CODE BEGIN SPI2_Init 1 */
+
+  /* USER CODE END SPI2_Init 1 */
+  /* SPI2 parameter configuration*/
+  hspi2.Instance = SPI2;
+  hspi2.Init.Mode = SPI_MODE_SLAVE;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi2.Init.NSS = SPI_NSS_HARD_INPUT;
+  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi2.Init.CRCPolynomial = 7;
+  hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi2.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
+  if (HAL_SPI_Init(&hspi2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI2_Init 2 */
+
+  /* USER CODE END SPI2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : CS_Pin */
+  GPIO_InitStruct.Pin = CS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(CS_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
