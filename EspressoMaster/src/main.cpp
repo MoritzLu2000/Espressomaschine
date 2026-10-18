@@ -1,97 +1,90 @@
-#include <SPI.h>
+#include <HX711.h>
 
-const int SS_PIN = D8;
+#define SCK_PIN 19
 
-typedef enum {
-    STATE_IDLE           = 0,
-    STATE_PUMPING        = 1,
-    STATE_HEATING_BOILER = 2,
-    STATE_HEATING_STEAM  = 3
-} MachineState;
+#define DT_PIN_1 23
+#define DT_PIN_2 18
 
-typedef enum {
-    MODE_OFF    = 0,
-    MODE_LOW    = 1,
-    MODE_MEDIUM = 2,
-    MODE_HIGH   = 3,
-    MODE_TURBO  = 4
-} MachineMode;
+#define WaterLevel_1 26
 
-typedef enum {
-    FLAG_NONE     = 0,
-    FLAG_WARNING  = 1,
-    FLAG_ERROR    = 2,
-    FLAG_CRITICAL = 3
-} MachineFlag;
+HX711 scale1, scale2;
 
-// Interrupt flags
-volatile bool isr_rising  = false;
-volatile bool isr_falling = false;
+// Kalibrierung
+const int KALIBRIERUNG_ANZAHL = 50;
+long kalSumme1 = 0, kalSumme2 = 0;
+int kalCount = 0;
+bool kalibriert = false;
+long nullwert1 = 0, nullwert2 = 0;
 
-void IRAM_ATTR onRising()  { isr_rising  = true; }
-void IRAM_ATTR onFalling() { isr_falling = true; }
+// Filter
+const int FILTER_GROESSE = 6;
+long filterPuffer1[FILTER_GROESSE];
+long filterPuffer2[FILTER_GROESSE];
+int filterIndex1 = 0, filterIndex2 = 0;
+long filterSumme1 = 0, filterSumme2 = 0;
+bool filterVoll1 = false, filterVoll2 = false;
 
-uint8_t encodeAll(MachineState state, MachineMode mode, MachineFlag flag) {
-    return ((state & 0x03) << 6)
-         | ((mode  & 0x0F) << 2)
-         | ((flag  & 0x03) << 0);
-}
-
-void sendAll(MachineState state, MachineMode mode, MachineFlag flag) {
-    uint8_t cmd = encodeAll(state, mode, flag);
-
-    digitalWrite(SS_PIN, LOW);
-    uint8_t response = SPI.transfer(cmd);
-    digitalWrite(SS_PIN, HIGH);
-
-    Serial.print("Gesendet: 0x"); Serial.print(cmd, HEX);
-    Serial.print("  →  Bestätigt: 0x"); Serial.println(response, HEX);
+long gefilterterWert(long neuerWert, long* puffer, int& index, long& summe, bool& voll) {
+    summe -= puffer[index];
+    puffer[index] = neuerWert;
+    summe += neuerWert;
+    index = (index + 1) % FILTER_GROESSE;
+    if (!voll && index == 0) voll = true;
+    int anzahl = voll ? FILTER_GROESSE : index;
+    return summe / anzahl;
 }
 
 void setup() {
     Serial.begin(115200);
-    pinMode(SS_PIN, OUTPUT);
-    digitalWrite(SS_PIN, HIGH);
+    delay(1000);
+    scale1.begin(DT_PIN_1, SCK_PIN);
+    scale2.begin(DT_PIN_2, SCK_PIN);
+    scale1.set_scale();
+    scale2.set_scale();
+    Serial.println("Kalibrierung – nichts auflegen!");
 
-    pinMode(D1, INPUT);
-    pinMode(D2, INPUT);
-    attachInterrupt(digitalPinToInterrupt(D1), onRising,  RISING);
-    attachInterrupt(digitalPinToInterrupt(D2), onFalling, FALLING);
-
-    SPI.begin();
-    SPI.setDataMode(SPI_MODE0);
-    SPI.setBitOrder(MSBFIRST);
-    SPI.setFrequency(10000);
+      pinMode(WaterLevel_1, INPUT_PULLUP);
 }
 
-const MachineState states[] = {
-    STATE_IDLE,
-    STATE_PUMPING,
-    STATE_HEATING_BOILER,
-    STATE_HEATING_STEAM
-};
-
-const char* stateNames[] = {
-    "IDLE",
-    "PUMPING",
-    "HEATING_BOILER",
-    "HEATING_STEAM"
-};
-
-const int stateCount = 4;
-int currentIndex = 0;
-
 void loop() {
-    if (isr_rising)  { isr_rising  = false; Serial.println("ISR: Rising  D1"); }
-    if (isr_falling) { isr_falling = false; Serial.println("ISR: Falling D2"); }
+    if (!kalibriert) {
+        if (scale1.is_ready() && scale2.is_ready()) {
+            kalSumme1 += scale1.get_value();
+            kalSumme2 += scale2.get_value();
+            kalCount++;
 
-    Serial.print("[");
-    Serial.print(stateNames[currentIndex]);
-    Serial.print("] ");
+            if (kalCount % 100 == 0) {
+                Serial.print("Kalibrierung: ");
+                Serial.print(kalCount);
+                Serial.println("/500");
+            }
 
-    // Testweise: Mode und Flag fest, nur State wechselt
-    sendAll(states[currentIndex], MODE_LOW, FLAG_NONE);
+            if (kalCount >= KALIBRIERUNG_ANZAHL) {
+                nullwert1 = kalSumme1 / KALIBRIERUNG_ANZAHL;
+                nullwert2 = kalSumme2 / KALIBRIERUNG_ANZAHL;
+                kalibriert = true;
+                Serial.print("Nullwert 1: "); Serial.println(nullwert1);
+                Serial.print("Nullwert 2: "); Serial.println(nullwert2);
+                Serial.println("Jetzt bekanntes Gewicht auflegen!");
+            }
+        }
+    } else {
+        
+        if (scale1.is_ready() && scale2.is_ready()) {
+            long roh1 = scale1.get_value() - nullwert1;
+            long roh2 = scale2.get_value() - nullwert2;
 
-    currentIndex = (currentIndex + 1) % stateCount;
-    delay(100);
+            long gef1 = gefilterterWert(roh1, filterPuffer1, filterIndex1, filterSumme1, filterVoll1);
+            long gef2 = gefilterterWert(roh2, filterPuffer2, filterIndex2, filterSumme2, filterVoll2);
+
+            long gesamt = gef1 + gef2;
+
+            Serial.print("Waage1: "); Serial.print(gef1);
+            Serial.print(" | Waage2: "); Serial.print(gef2);
+            Serial.print(" | Gesamt: "); Serial.println(gesamt);
+        }
+    }
+    if (digitalRead(WaterLevel_1) == LOW) {
+        Serial.println("Flüssigkeit erkannt!");
+    }
 }

@@ -12,9 +12,9 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "C:/Users/luith/Documents/Projekte/Espresso/Espressomaschine/EspressoMaster/.pio/build/d1_mini_lite/firmware.elf",
-            "projectEnvName": "d1_mini_lite",
-            "toolchainBinDir": "C:/Users/luith/.platformio/packages/toolchain-xtensa/bin",
+            "executable": "C:/Users/luith/Documents/Projekte/Espresso/Espressomaschine/EspressoMaster/.pio/build/esp32_d1_mini/firmware.elf",
+            "projectEnvName": "esp32_d1_mini",
+            "toolchainBinDir": "C:/Users/luith/.platformio/packages/toolchain-xtensa-esp32/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "preLaunchTask": {
                 "type": "PlatformIO",
@@ -25,18 +25,18 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "C:/Users/luith/Documents/Projekte/Espresso/Espressomaschine/EspressoMaster/.pio/build/d1_mini_lite/firmware.elf",
-            "projectEnvName": "d1_mini_lite",
-            "toolchainBinDir": "C:/Users/luith/.platformio/packages/toolchain-xtensa/bin",
+            "executable": "C:/Users/luith/Documents/Projekte/Espresso/Espressomaschine/EspressoMaster/.pio/build/esp32_d1_mini/firmware.elf",
+            "projectEnvName": "esp32_d1_mini",
+            "toolchainBinDir": "C:/Users/luith/.platformio/packages/toolchain-xtensa-esp32/bin",
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "C:/Users/luith/Documents/Projekte/Espresso/Espressomaschine/EspressoMaster/.pio/build/d1_mini_lite/firmware.elf",
-            "projectEnvName": "d1_mini_lite",
-            "toolchainBinDir": "C:/Users/luith/.platformio/packages/toolchain-xtensa/bin",
+            "executable": "C:/Users/luith/Documents/Projekte/Espresso/Espressomaschine/EspressoMaster/.pio/build/esp32_d1_mini/firmware.elf",
+            "projectEnvName": "esp32_d1_mini",
+            "toolchainBinDir": "C:/Users/luith/.platformio/packages/toolchain-xtensa-esp32/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "loadMode": "manual"
         }
